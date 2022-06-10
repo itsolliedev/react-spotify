@@ -9,3 +9,8 @@ export const playlistAtom = atom({
     key: 'playlistAtom',    
     default: null,
 });
+
+export const playlistsAtom = atom({
+    key: 'playlistsAtom',
+    default: [],
+});

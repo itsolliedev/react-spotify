@@ -46,6 +46,10 @@ function Player() {
       fetchSong()
       setVolume(50)
     }
+
+    const interval = setInterval(() => {
+      fetchSong()
+    }, 10000)
   }, [currentTrack, spotifyApi, session])
 
   const handlePlayPause = () => {
@@ -56,6 +60,7 @@ function Player() {
         setIsPlaying(false)
       } else {
         spotifyApi.play()
+        fetchSong()
         setIsPlaying(true)
       }
     })
@@ -90,7 +95,10 @@ function Player() {
       <div className="flex items-center justify-evenly">
         <SwitchHorizontalIcon className="button" />
         <RewindIcon
-          /* onClick(() => spotifyApi.skipToPrevious()) */ className="button"
+          onClick={() => {
+            spotifyApi.skipToPrevious()
+            fetchSong()
+          }} className="button"
         />
         {isPlaying ? (
           <PauseIcon
@@ -104,9 +112,16 @@ function Player() {
           />
         )}
         <FastForwardIcon
-          /* onClick(() => spotifyApi.skipToNext()) */ className="button"
+          onClick={() => {
+            spotifyApi.skipToNext()
+            fetchSong()
+          }}
+          className="button"
         />
-        <ReplyIcon className="button" />
+        <ReplyIcon onClick={() => {
+          //@ts-ignore
+          spotifyApi.setRepeat("track")
+        }} className="button" />
       </div>
 
       <div className="flex items-center justify-end space-x-3 md:space-x-4">
